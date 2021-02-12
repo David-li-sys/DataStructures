@@ -8,11 +8,32 @@ public class C_A_SingleLinkedList {
         HeroNode hero4 = new HeroNode(4,"林冲","豹子头");
 
         HeadNode headNode = new HeadNode();
-        headNode.add(hero1);
-        headNode.add(hero2);
-        headNode.add(hero3);
-        headNode.add(hero4);
+//        headNode.add(hero1);
+//        headNode.add(hero2);
+//        headNode.add(hero3);
+//        headNode.add(hero4);
 
+        headNode.addByOrder(hero2);
+        headNode.addByOrder(hero4);
+        headNode.addByOrder(hero3);
+        headNode.addByOrder(hero1);
+
+        headNode.list();
+
+        HeroNode newHeroNode = new HeroNode(2,"小卢","玉麒麟~~");
+        headNode.update(newHeroNode);
+        System.out.println("----------------------------------");
+        headNode.list();
+
+        headNode.del(1);
+        System.out.println("----------------------------------");
+        headNode.list();
+        headNode.del(4);
+        System.out.println("----------------------------------");
+        headNode.list(); headNode.del(2);
+        System.out.println("----------------------------------");
+        headNode.list(); headNode.del(3);
+        System.out.println("----------------------------------");
         headNode.list();
     }
 }
@@ -31,6 +52,30 @@ class HeadNode{
         temp.next = heroNode;
     }
 
+    public void addByOrder(HeroNode heroNode){
+        HeroNode temp = head;
+        boolean flag = false;
+        while(true){
+            if(temp.next == null){
+                break;
+            }
+            if(temp.next.no >heroNode.no ){
+                break;
+            }else if(temp.next.no == heroNode.no){
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+
+        if(flag){
+            System.out.printf("准备插入的英雄编号%d已经存在，不能加入\n",heroNode.no);
+        }else{
+            heroNode.next = temp.next;
+            temp.next = heroNode;
+        }
+    }
+
     public void list(){
         if(head.next == null){
             System.out.println("链表为空");
@@ -43,6 +88,53 @@ class HeadNode{
             }
             System.out.println(temp);
             temp = temp.next;
+        }
+    }
+
+    public void update(HeroNode newHeroNode){
+        if(head.next == null){
+            System.out.println("链表为空");
+            return;
+        }
+        HeroNode temp=head;
+        boolean flag = false;
+        while(true){
+            if(temp.next == null){
+                break;
+            }
+            if(temp.no == newHeroNode.no){
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+
+        if(flag){
+            temp.name = newHeroNode.name;
+            temp.nickname = newHeroNode.nickname;
+        }else {
+            System.out.printf("没有找到编号为%d的节点，不能修改\n",newHeroNode.no);
+        }
+    }
+
+    public void del(int no){
+        HeroNode temp = head;
+        boolean flag = false;
+        while(true){
+            if(temp.next == null){
+                break;
+            }
+            if(temp.next.no == no){
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+
+        if(flag){
+            temp.next = temp.next.next;
+        }else{
+            System.out.printf("要删除的节点%d不存在",no);
         }
     }
 
