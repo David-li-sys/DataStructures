@@ -2,6 +2,10 @@ package com.njsf;
 
 import java.util.Stack;
 
+/**
+ *
+ * 单向链表
+ */
 public class C_A_SingleLinkedList {
     public static void main(String[] args) {
         HeroNode hero1 = new HeroNode(1,"宋江","及时雨");
@@ -183,7 +187,7 @@ class HeadNode{
         HeroNode temp=head;
         boolean flag = false;//是否找到指定节点
         while(true){
-            if(temp.next == null){
+            if(temp == null){
                 break;
             }
             if(temp.no == newHeroNode.no){
