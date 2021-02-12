@@ -25,21 +25,58 @@ public class C_A_SingleLinkedList {
         System.out.println("----------------------------------");
         headNode.list();
 
-        headNode.del(1);
-        System.out.println("----------------------------------");
-        headNode.list();
-        headNode.del(4);
-        System.out.println("----------------------------------");
-        headNode.list(); headNode.del(2);
-        System.out.println("----------------------------------");
-        headNode.list(); headNode.del(3);
-        System.out.println("----------------------------------");
-        headNode.list();
+//        headNode.del(1);
+//        System.out.println("----------------------------------");
+//        headNode.list();
+//        headNode.del(4);
+//        System.out.println("----------------------------------");
+//        headNode.list();
+//        headNode.del(2);
+//        System.out.println("----------------------------------");
+//        headNode.list(); headNode.del(3);
+//        System.out.println("----------------------------------");
+//        headNode.list();
+
+        System.out.printf("链表长度：%d\n",getLength(headNode.getHead()));
+        HeroNode res = findLastIndexNode(headNode.getHead(),2);
+        System.out.println(res);
+    }
+
+    public static HeroNode findLastIndexNode(HeroNode head,int index){
+        if(head.next == null){
+            return null;
+        }
+        int size = getLength(head);
+        if(index <=0 && index > size){
+            return null;
+        }
+        HeroNode cur = head.next;
+        for(int i = 0;i<size-index;i++){
+            cur = cur.next;
+        }
+        return cur;
+    }
+
+    public static int getLength(HeroNode head){
+        if(head.next == null){
+            return 0;
+        }
+        int length = 0;
+        HeroNode cur = head.next;
+        while(cur != null){
+            length++;
+            cur = cur.next;
+        }
+        return length;
     }
 }
 //头结点
 class HeadNode{
     private HeroNode head = new HeroNode(0,"","");
+
+    public HeroNode getHead(){
+        return head;
+    }
     //直接添加
     public void add(HeroNode heroNode){
         HeroNode temp = head;
