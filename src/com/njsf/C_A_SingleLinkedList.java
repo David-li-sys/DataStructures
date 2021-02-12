@@ -1,5 +1,7 @@
 package com.njsf;
 
+import java.util.Stack;
+
 public class C_A_SingleLinkedList {
     public static void main(String[] args) {
         HeroNode hero1 = new HeroNode(1,"宋江","及时雨");
@@ -37,11 +39,56 @@ public class C_A_SingleLinkedList {
 //        System.out.println("----------------------------------");
 //        headNode.list();
 
-        System.out.printf("链表长度：%d\n",getLength(headNode.getHead()));
-        HeroNode res = findLastIndexNode(headNode.getHead(),2);
-        System.out.println(res);
-    }
+//        System.out.printf("链表长度：%d\n",getLength(headNode.getHead()));
+//        HeroNode res = findLastIndexNode(headNode.getHead(),2);
+//        System.out.println(res);
+//        System.out.println("--------------反转后--------------------");
+//        reverseList(headNode.getHead());
+//        headNode.list();
+        System.out.println("--------------逆序打印-----------------");
+        reversePrint(headNode.getHead());
 
+    }
+    //逆序打印链表（使用栈）
+    public static void reversePrint(HeroNode head){
+        if(head.next == null){
+            return;
+        }
+        Stack<HeroNode> stack = new Stack<>();
+        HeroNode cur = head.next;
+
+        while(cur != null){
+            stack.push(cur);
+            cur = cur.next;
+        }
+
+        while(stack.size() > 0){
+            System.out.println(stack.pop());
+        }
+    }
+    //将链表反转
+    public static void reverseList(HeroNode head){
+        if(head.next == null || head.next.next == null){
+            return;
+        }
+
+        HeroNode cur = head.next;
+        HeroNode next = null;
+        //临时头结点
+        HeroNode reverseHead = new HeroNode(0,"","");
+        //头插法
+        while(cur != null){
+            //记录当前节点的下一个节点
+            next = cur.next;
+            cur.next = reverseHead.next;
+            reverseHead.next = cur;
+            cur = next;
+        }
+
+        head.next = reverseHead.next;
+
+    }
+    //查找链表倒数指定元素
     public static HeroNode findLastIndexNode(HeroNode head,int index){
         if(head.next == null){
             return null;
@@ -56,7 +103,7 @@ public class C_A_SingleLinkedList {
         }
         return cur;
     }
-
+    //得到链表长度
     public static int getLength(HeroNode head){
         if(head.next == null){
             return 0;
