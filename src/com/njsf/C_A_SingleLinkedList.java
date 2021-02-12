@@ -40,7 +40,7 @@ public class C_A_SingleLinkedList {
 //头结点
 class HeadNode{
     private HeroNode head = new HeroNode(0,"","");
-
+    //直接添加
     public void add(HeroNode heroNode){
         HeroNode temp = head;
         while(true){
@@ -51,7 +51,7 @@ class HeadNode{
         }
         temp.next = heroNode;
     }
-
+    //排序添加
     public void addByOrder(HeroNode heroNode){
         HeroNode temp = head;
         boolean flag = false;
@@ -75,7 +75,7 @@ class HeadNode{
             temp.next = heroNode;
         }
     }
-
+    //遍历链表
     public void list(){
         if(head.next == null){
             System.out.println("链表为空");
@@ -90,14 +90,14 @@ class HeadNode{
             temp = temp.next;
         }
     }
-
+    //修改节点
     public void update(HeroNode newHeroNode){
         if(head.next == null){
             System.out.println("链表为空");
             return;
         }
         HeroNode temp=head;
-        boolean flag = false;
+        boolean flag = false;//是否找到指定节点
         while(true){
             if(temp.next == null){
                 break;
@@ -116,10 +116,10 @@ class HeadNode{
             System.out.printf("没有找到编号为%d的节点，不能修改\n",newHeroNode.no);
         }
     }
-
+    //删除节点
     public void del(int no){
         HeroNode temp = head;
-        boolean flag = false;
+        boolean flag = false;//是否找到指定节点
         while(true){
             if(temp.next == null){
                 break;
