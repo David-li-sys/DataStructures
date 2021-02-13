@@ -6,14 +6,14 @@ import java.util.Date;
 public class F_A_BubbleSort {
     public static void main(String[] args) {
 //        int[] arr = {6,5,4,3,2,1};
-        int[] arr = new int[8];
-        for (int i = 0; i < 8; i++) {
-            arr[i] = (int)(Math.random()*800);
+        int[] arr = new int[80000];
+        for (int i = 0; i < 80000; i++) {
+            arr[i] = (int)(Math.random()*80000000);
         }
-
+        Long start = System.currentTimeMillis();
         bubbleSort(arr);
-
-        System.out.println(Arrays.toString(arr));
+        Long end = System.currentTimeMillis();
+        System.out.println(end - start);
 
 
     }
