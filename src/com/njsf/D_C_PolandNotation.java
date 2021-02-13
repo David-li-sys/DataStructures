@@ -7,10 +7,12 @@ import java.util.Stack;
 public class D_C_PolandNotation {
     public static void main(String[] args) {
 
-        String expression = "1+((2+3)*4)-5";
+        String expression = "10+((2+3)*4)-5";
         List<String> infixExpressionList = toInfixExpressionList(expression);
         List<String> suffixExpressionList = parseSuffixExpressionList(infixExpressionList);
         System.out.println(suffixExpressionList);
+        int res = calculate(suffixExpressionList);
+        System.out.println(res);
 
 //        String suffixExpression = "1 2 3 + 4 * + 5 -";
 //        List<String> spn = getListString(suffixExpression);
@@ -128,7 +130,7 @@ class Operation{
                 result = DIV;
                 break;
             default:
-                System.out.println("不存在该运算符");
+
                 break;
         }
 
