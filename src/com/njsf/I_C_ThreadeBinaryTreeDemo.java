@@ -1,43 +1,82 @@
 package com.njsf;
 
-public class I_A_BinaryTreeDemo {
+public class I_C_ThreadeBinaryTreeDemo {
     public static void main(String[] args) {
-        BinaryTree binaryTree = new BinaryTree();
+        HeroThreadBinaryNode hero1 = new HeroThreadBinaryNode(1, "tom");
+        HeroThreadBinaryNode hero3 = new HeroThreadBinaryNode(3, "jack");
+        HeroThreadBinaryNode hero6 = new HeroThreadBinaryNode(6, "smith");
+        HeroThreadBinaryNode hero8 = new HeroThreadBinaryNode(8, "mary");
+        HeroThreadBinaryNode hero10 = new HeroThreadBinaryNode(10, "king");
+        HeroThreadBinaryNode hero14 = new HeroThreadBinaryNode(14, "dim");
 
-        HeroBinaryNode hero1 = new HeroBinaryNode(1,"宋江");
-        HeroBinaryNode hero2 = new HeroBinaryNode(2,"吴用");
-        HeroBinaryNode hero3 = new HeroBinaryNode(3,"卢俊义");
-        HeroBinaryNode hero4 = new HeroBinaryNode(4,"林冲");
-        HeroBinaryNode hero5 = new HeroBinaryNode(5,"关胜");
+        hero1.setLeft(hero3);
+        hero1.setRight(hero6);
+        hero3.setLeft(hero8);
+        hero3.setRight(hero10);
+        hero6.setLeft(hero14);
 
-        hero1.setLeft(hero2);
-        hero1.setRight(hero3);
-        hero3.setRight(hero4);
-        hero3.setLeft(hero5);
-        binaryTree.setRoot(hero1);
-//        System.out.println("--------前序遍历-------");
-//        binaryTree.preOrder();
-//        System.out.println("--------中序遍历-------");
-//        binaryTree.infixOrder();
-//        System.out.println("--------后序遍历-------");
-//        binaryTree.postOrder();
+        ThreadBinaryTree tree = new ThreadBinaryTree();
+        tree.setRoot(hero1);
+        tree.threadedNodes();
+        HeroThreadBinaryNode leftNode = hero10.getLeft();
+        System.out.println(leftNode);
 
-//        HeroBinaryNode resNode = binaryTree.preOrderSearch(3);
-//        HeroBinaryNode resNode = binaryTree.infixOrderSearch(13);
-//        System.out.println(resNode);
 
-        binaryTree.preOrder();
-        binaryTree.delNode(3);
-        System.out.println("---------------------------");
-        binaryTree.preOrder();
+
+        System.out.println("--------------------------");
+        tree.threadedList();
+
+
+
     }
 }
 
-class BinaryTree{
-    private HeroBinaryNode root;
+class ThreadBinaryTree{
+    private HeroThreadBinaryNode root;
+    //指向当前节点的前驱指针
+    private HeroThreadBinaryNode pre = null;
 
-    public void setRoot(HeroBinaryNode root){
+    public void setRoot(HeroThreadBinaryNode root){
         this.root = root;
+    }
+
+    public void threadedNodes(){
+        threadedNodes(root);
+    }
+
+    public void threadedList(){
+        HeroThreadBinaryNode node = root;
+        while(node != null){
+            while(node.getLeftType() == 0){
+                node = node.getLeft();
+            }
+            System.out.println(node);
+
+            while(node.getRightType() == 1){
+                node = node.getRight();
+                System.out.println(node);
+            }
+            node = node.getRight();
+        }
+    }
+
+    public void threadedNodes(HeroThreadBinaryNode node){
+        if(node == null){
+            return;
+        }
+
+        threadedNodes(node.getLeft());
+        if(node.getLeft() == null){
+            node.setLeft(pre);
+            node.setLeftType(1);
+        }
+        if(pre != null && pre.getRight() == null){
+            pre.setRight(node);
+            pre.setRightType(1);
+        }
+        pre = node;
+
+        threadedNodes(node.getRight());
     }
 
     public void delNode(int no){
@@ -76,7 +115,7 @@ class BinaryTree{
         }
     }
 
-    public HeroBinaryNode preOrderSearch(int no){
+    public HeroThreadBinaryNode preOrderSearch(int no){
         if(root != null){
             return root.preOrderSearch(no);
         }else{
@@ -84,7 +123,7 @@ class BinaryTree{
         }
     }
 
-    public HeroBinaryNode infixOrderSearch(int no){
+    public HeroThreadBinaryNode infixOrderSearch(int no){
         if(root != null){
             return root.infixOrderSearch(no);
         }else{
@@ -92,7 +131,7 @@ class BinaryTree{
         }
     }
 
-    public HeroBinaryNode postOrderSearch(int no){
+    public HeroThreadBinaryNode postOrderSearch(int no){
         if(root != null){
             return  root.posrOrderSearch(no);
         }else{
@@ -101,13 +140,17 @@ class BinaryTree{
     }
 }
 
-class HeroBinaryNode{
+class  HeroThreadBinaryNode{
     private int no;
     private String name;
-    private HeroBinaryNode left;
-    private HeroBinaryNode right;
+    private HeroThreadBinaryNode left;
+    private HeroThreadBinaryNode right;
 
-    public HeroBinaryNode(int no, String name){
+    //等于0表示指向子树，等于1表示指向前驱后继
+    private int leftType;
+    private int rightType;
+
+    public HeroThreadBinaryNode(int no, String name){
         this.no = no;
         this.name = name;
     }
@@ -164,11 +207,11 @@ class HeroBinaryNode{
         System.out.println(this);
     }
     //前序查找
-    public HeroBinaryNode preOrderSearch(int no){
+    public HeroThreadBinaryNode preOrderSearch(int no){
         if(this.no == no){
             return this;
         }
-        HeroBinaryNode resNode = null;
+        HeroThreadBinaryNode resNode = null;
         if(this.left != null){
             resNode = this.left.preOrderSearch(no);
         }
@@ -183,8 +226,8 @@ class HeroBinaryNode{
 
     }
     //中序查找
-    public HeroBinaryNode infixOrderSearch(int no){
-        HeroBinaryNode resNode = null;
+    public HeroThreadBinaryNode infixOrderSearch(int no){
+        HeroThreadBinaryNode resNode = null;
         if(this.left != null){
             resNode = this.left.infixOrderSearch(no);
         }
@@ -202,8 +245,8 @@ class HeroBinaryNode{
         return  resNode;
     }
     //后续查找
-    public HeroBinaryNode posrOrderSearch(int no){
-        HeroBinaryNode resNode = null;
+    public HeroThreadBinaryNode posrOrderSearch(int no){
+        HeroThreadBinaryNode resNode = null;
         if(this.left != null){
             resNode = this.left.posrOrderSearch(no);
 
@@ -223,6 +266,22 @@ class HeroBinaryNode{
         return resNode;
     }
 
+    public int getLeftType() {
+        return leftType;
+    }
+
+    public void setLeftType(int leftType) {
+        this.leftType = leftType;
+    }
+
+    public int getRightType() {
+        return rightType;
+    }
+
+    public void setRightType(int rightType) {
+        this.rightType = rightType;
+    }
+
     public int getNo() {
         return no;
     }
@@ -239,25 +298,25 @@ class HeroBinaryNode{
         this.name = name;
     }
 
-    public HeroBinaryNode getLeft() {
+    public HeroThreadBinaryNode getLeft() {
         return left;
     }
 
-    public void setLeft(HeroBinaryNode left) {
+    public void setLeft(HeroThreadBinaryNode left) {
         this.left = left;
     }
 
-    public HeroBinaryNode getRight() {
+    public HeroThreadBinaryNode getRight() {
         return right;
     }
 
-    public void setRight(HeroBinaryNode right) {
+    public void setRight(HeroThreadBinaryNode right) {
         this.right = right;
     }
 
     @Override
     public String toString() {
-        return "HeroBinaryNode{" +
+        return "HeroThreadBinaryNode{" +
                 "no=" + no +
                 ", name='" + name + '\'' +
                 '}';
