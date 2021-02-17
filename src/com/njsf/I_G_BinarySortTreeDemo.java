@@ -11,7 +11,14 @@ public class I_G_BinarySortTreeDemo {
             binarySortTree.add(node);
         }
 
+        binarySortTree.delNode(2);
+        binarySortTree.delNode(5);
+        binarySortTree.delNode(9);
+        binarySortTree.delNode(12);
+        binarySortTree.delNode(7);
+        binarySortTree.delNode(3);
         binarySortTree.delNode(10);
+        binarySortTree.delNode(1);
 
         binarySortTree.infixOrder();
     }
@@ -19,6 +26,10 @@ public class I_G_BinarySortTreeDemo {
 
 class BinarySortTree{
     private BinarySortNode root;
+
+    public BinarySortNode getRoot(){
+        return root;
+    }
 
     public BinarySortNode search(int value){
         if(root == null){
@@ -72,17 +83,27 @@ class BinarySortTree{
 
             }else{
                 if(targetNode.left != null){
-                    if(parent.left.value == value){
-                        parent.left = targetNode.left;
+                    if(parent != null){
+                        if(parent.left.value == value){
+                            parent.left = targetNode.left;
+                        }else{
+                            parent.right = targetNode.left;
+                        }
                     }else{
-                        parent.right = targetNode.left;
+                        root = targetNode.left;
                     }
+
                 }else{
-                    if(parent.left.value == value){
-                        parent.left = targetNode.right;
+                    if(parent != null){
+                        if(parent.left.value == value){
+                            parent.left = targetNode.right;
+                        }else{
+                            parent.right = targetNode.right;
+                        }
                     }else{
-                        parent.right = targetNode.right;
+                        root = targetNode.right;
                     }
+
                 }
             }
 
