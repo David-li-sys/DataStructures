@@ -2,6 +2,7 @@ package com.njsf;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class J_A_Graph {
     private ArrayList<String> vertexList;//图的节点集合
@@ -26,6 +27,10 @@ public class J_A_Graph {
         graph.showGraph();
 
         graph.dfs();
+        System.out.println();
+        System.out.println("-------------------------");
+
+        graph.bfs();
 
     }
 
@@ -33,7 +38,7 @@ public class J_A_Graph {
         edges = new int[n][n];
         vertexList = new ArrayList<>(n);
         numOfEdges = 0;
-        isVisited = new boolean[n];
+
 
     }
 
@@ -71,9 +76,41 @@ public class J_A_Graph {
     }
 
     public void dfs(){
+        isVisited = new boolean[vertexList.size()];
         for(int i = 0; i < getNumOfVertex(); i++){
             if(!isVisited[i]){
                 dfs(isVisited,i);
+            }
+        }
+    }
+
+    private void bfs(boolean[] isVisited, int i){
+        int u;
+        int w;
+        LinkedList queue = new LinkedList();
+        System.out.print(getValueByIndex(i) + "->");
+        isVisited[i] = true;
+        queue.addLast(i);
+        while(!queue.isEmpty()){
+            u = (Integer) queue.removeFirst();
+            w = getFirstNeighbor(u);
+            while(w != -1){
+                if(!isVisited[w]){
+                    System.out.print(getValueByIndex(w) + "->");
+                    isVisited[w] = true;
+                    queue.addLast(w);
+                }
+                w = getNextNeighbor(u,w);
+            }
+        }
+
+    }
+
+    public void bfs(){
+        isVisited = new boolean[vertexList.size()];
+        for(int i =0; i <getNumOfVertex(); i++){
+            if(!isVisited[i]){
+                bfs(isVisited,i);
             }
         }
     }
